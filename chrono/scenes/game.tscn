@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqfw43fsuk477"]
+[gd_scene load_steps=5 format=3 uid="uid://dqfw43fsuk477"]
 
 [ext_resource type="PackedScene" uid="uid://cutm1iti8k0nu" path="res://scenes/player.tscn" id="1_uwrxv"]
-[ext_resource type="Script" uid="uid://dj7gqgb1wt527" path="res://scripts/player.gd" id="2_yqjtg"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
 
@@ -14,8 +13,7 @@ normal = Vector2(-1, 0)
 [node name="Game" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
-position = Vector2(4, 0)
-script = ExtResource("2_yqjtg")
+position = Vector2(-5, 22)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
