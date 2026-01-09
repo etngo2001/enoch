@@ -4,9 +4,12 @@ extends CharacterBody2D
 const SPEED = 120.0
 const JUMP_VELOCITY = -300.0
 const REWIND_DURATION = 4.0
+var ghost_timer := 0.0
+const GHOST_INTERVAL := 0.05
 
 @onready var animated_sprite = $AnimatedSprite2D
 
+@export var ghost_scene: PackedScene
 
 var state_history: Array = []
 var is_rewinding := false
@@ -47,6 +50,13 @@ func _physics_process(delta: float) -> void:
 
 	record_state()
 	handle_rewind()
+	
+	ghost_timer += delta
+
+	if ghost_timer >= GHOST_INTERVAL:
+		ghost_timer = 0.0
+		spawn_ghost()
+
 
 func record_state():
 	# Save a snapshot of the player's current state
@@ -98,3 +108,28 @@ func rewind_player():
 
 	# Re-enable physics and input
 	is_rewinding = false
+
+func spawn_ghost():
+	# Safety check in case the scene isn't assigned
+	if ghost_scene == null:
+		return
+
+	# Create a new ghost instance
+	var ghost = ghost_scene.instantiate()
+
+	# Place it exactly where the player is right now
+	ghost.global_position = global_position
+
+	# Copy visual state from the player
+	var ghost_sprite: AnimatedSprite2D = ghost.get_node("AnimatedSprite2D")
+
+	ghost_sprite.sprite_frames = animated_sprite.sprite_frames
+	ghost_sprite.play(animated_sprite.animation)
+	ghost_sprite.frame = animated_sprite.frame
+	ghost_sprite.flip_h = animated_sprite.flip_h
+
+	# Optional: tint ghost slightly blue
+	ghost_sprite.modulate = Color(0.6, 0.8, 1.0, 0.5)
+
+	# Add ghost to the scene (same parent as player)
+	get_parent().add_child(ghost)
