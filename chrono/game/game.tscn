@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqfw43fsuk477"]
+[gd_scene load_steps=6 format=3 uid="uid://dqfw43fsuk477"]
 
-[ext_resource type="PackedScene" uid="uid://cutm1iti8k0nu" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://cutm1iti8k0nu" path="res://game/player/player.tscn" id="1_vasa2"]
+[ext_resource type="PackedScene" uid="uid://0uhyiuaa8lxf" path="res://game/player/ghost_sprite.tscn" id="2_h7iqs"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
 
@@ -12,8 +13,10 @@ normal = Vector2(-1, 0)
 
 [node name="Game" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_uwrxv")]
-position = Vector2(-5, 22)
+[node name="Player" parent="." instance=ExtResource("1_vasa2")]
+position = Vector2(-5, -1)
+
+[node name="GhostSprite" parent="Player" instance=ExtResource("2_h7iqs")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
